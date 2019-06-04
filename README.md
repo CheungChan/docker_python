@@ -1,8 +1,8 @@
-# 我的基于python最新版本ubuntu环境的docker镜像
+# 基于debian的最新python环境
 
 ### 如果需要修改
 1. 修改代码
-2. sh rebuild.sh python最新版本号
+2. sh rebuild.sh python 最新版本号(3.7.3)
 
 ## 启动
 ```bash
