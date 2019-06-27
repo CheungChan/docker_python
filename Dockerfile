@@ -28,7 +28,7 @@ RUN touch /var/log/nothing.log
 COPY ./etc/pip.conf /root/.pip/pip.conf
 
 # 安装一些基础的python扩展
-COPY ./etc/requirements.txt workspace/
+#COPY ./etc/requirements.txt workspace/
 CMD tail -f /var/log/nothing.log
 # 启动命令如下:
 # docker run --name python_c -itd cheungchan/python bash
