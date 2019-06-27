@@ -7,7 +7,7 @@ WORKDIR workspace
 
 # 公共部分
 # 更改apt源
-COPY ./etc/apt.sources.list /etc/apt/sources.list
+#COPY ./etc/apt.sources.list /etc/apt/sources.list
 # 更改时区
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -20,6 +20,7 @@ RUN apt-get update
 RUN apt-get install -y vim
 # 安装htop
 RUN apt-get install -y htop
+RUN apt-get install -y lrzsz
 RUN touch /var/log/nothing.log
 # 项目私有部分
 
@@ -28,7 +29,6 @@ COPY ./etc/pip.conf /root/.pip/pip.conf
 
 # 安装一些基础的python扩展
 COPY ./etc/requirements.txt workspace/
-RUN pip install -r workspace/requirements.txt
 CMD tail -f /var/log/nothing.log
 # 启动命令如下:
 # docker run --name python_c -itd cheungchan/python bash
