@@ -36,16 +36,10 @@ ENV LANG en_US.UTF-8
 
 # 安装openssh
 RUN apt-get install -y openssh-server
-RUN mkdir /var/run/sshd
+COPY ./etc/sshd_config /etc/ssh/ssh_config
 RUN echo 'root:root' |chpasswd
-RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
-RUN mkdir /root/.ssh
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN echo "export VISIBLE=now" >> /etc/profile
 RUN service ssh restart
-
 
 # 项目私有部分
 
@@ -55,7 +49,7 @@ COPY ./etc/pip.conf /root/.pip/pip.conf
 # 安装一些基础的python扩展
 #COPY ./etc/requirements.txt workspace/
 
-EXPOSE 22
+EXPOSE 8022
 ENTRYPOINT /usr/sbin/sshd && bash
 # 启动命令如下:
 # docker run --name python_c -itd cheungchan/python bash
