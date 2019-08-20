@@ -17,11 +17,23 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # 安装vim
 RUN apt-get update
+# 使用ARG 只有在build的时候有效, 使用ENV, 会持久化
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get install -y vim
-# 安装htop
 RUN apt-get install -y htop
 RUN apt-get install -y lrzsz
-RUN touch /var/log/nothing.log
+
+# Set the locale
+RUN apt-get install -y --no-install-recommends apt-utils
+RUN apt-get install -y locales
+
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    dpkg-reconfigure --frontend=noninteractive locales && \
+    update-locale LANG=en_US.UTF-8
+
+ENV LANG en_US.UTF-8
+
 # 安装openssh
 RUN apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
@@ -34,6 +46,7 @@ RUN apt-get clean && \
 RUN echo "export VISIBLE=now" >> /etc/profile
 RUN service ssh restart
 
+
 # 项目私有部分
 
 # 安装python依赖
@@ -41,7 +54,6 @@ COPY ./etc/pip.conf /root/.pip/pip.conf
 
 # 安装一些基础的python扩展
 #COPY ./etc/requirements.txt workspace/
-#CMD tail -f /var/log/nothing.log
 
 EXPOSE 22
 ENTRYPOINT /usr/sbin/sshd && bash
