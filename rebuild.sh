@@ -11,6 +11,7 @@ image_name='cheungchan/python'
 container_name='python_c'
 
 echo "删除 ${container_name} 容器"
+docker stop $container_name
 docker rm $container_name
 
 echo "构建镜像 $image_name:$version"
@@ -27,4 +28,7 @@ echo '推送镜像'
 docker push "$image_name:$version"
 docker push "$image_name:latest"
 
+echo "删除容器"
+docker stop $container_name
+docker rm $container_name
 echo "rebuild $image_name:$version 完成"
