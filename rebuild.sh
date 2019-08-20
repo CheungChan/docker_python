@@ -18,7 +18,7 @@ echo "构建镜像 $image_name:$version"
 docker build --rm -t "$image_name:$version" .
 
 echo "启动容器 $container_name"
-docker run --name $container_name -p 8022:22  -itd "$image_name:$version" bash
+docker run --name $container_name -p 8022:8022  -itd "$image_name:$version" bash
 
 echo '提交镜像'
 docker commit -a "chenzhang" -m '升级到$version' $container_name  "$image_name:$version"

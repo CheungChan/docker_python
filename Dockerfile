@@ -13,12 +13,11 @@ ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
 RUN apt-get install tzdata
+# 使用ARG 只有在build的时候有效, 使用ENV, 会持久化
 ARG DEBIAN_FRONTEND=noninteractive
 
 # 安装vim
 RUN apt-get update
-# 使用ARG 只有在build的时候有效, 使用ENV, 会持久化
-ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get install -y vim
 RUN apt-get install -y htop
@@ -36,10 +35,12 @@ ENV LANG en_US.UTF-8
 
 # 安装openssh
 RUN apt-get install -y openssh-server
-COPY ./etc/sshd_config /etc/ssh/ssh_config
+RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+RUN echo 'Port 8022' >> /etc/ssh/sshd_config
+RUN sed -i 's/PermitRootLogin prohibit-password/# PermitRootLogin prohibit-password/' /etc/ssh/sshd_config
 RUN echo 'root:root' |chpasswd
 RUN echo "export VISIBLE=now" >> /etc/profile
-RUN service ssh restart
+RUN /etc/init.d/ssh restart
 
 # 项目私有部分
 
