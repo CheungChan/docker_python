@@ -1,6 +1,6 @@
 # Dockerfile github address: https://github.com/CheungChan/dev/blob/master/Dockerfile
 # Dockerhub address:   https://hub.docker.com/r/cheungchan/dev/
-FROM python:3.7.4
+FROM python:3.8.0
 MAINTAINER chenzhang <1377699408@qq.com>
 RUN mkdir workspace
 WORKDIR workspace
