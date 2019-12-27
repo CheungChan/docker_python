@@ -9,6 +9,7 @@ image_name='cheungchan/python'
 
 echo "构建镜像 $image_name:$version"
 docker build -t "$image_name:$version" .
+docker build -t "$image_name:latest" .
 
 echo '推送镜像'
 docker push "$image_name:$version"
