@@ -1,4 +1,4 @@
-FROM python:3.8.0
+FROM python:3.8.1
 MAINTAINER chenzhang <1377699408@qq.com>
 
 COPY ./etc/pip.conf /root/.pip/pip.conf
@@ -15,7 +15,7 @@ RUN apt-get install tzdata
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get install -y --no-install-recommends apt-utils
-RUN apt-get install -y locales vim htop lrzsz
+RUN apt-get install -y locales vim htop
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     dpkg-reconfigure --frontend=noninteractive locales && \
