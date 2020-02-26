@@ -34,6 +34,6 @@ RUN echo 'root:root' |chpasswd
 RUN echo "export VISIBLE=now" >> /etc/profile
 RUN /etc/init.d/ssh restart
 RUN /usr/sbin/sshd
-
+RUN pip install --upgrade pip
 EXPOSE 22
 CMD bash

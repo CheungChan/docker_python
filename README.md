@@ -2,7 +2,7 @@
 
 ### 如果需要修改
 1. 修改代码
-2. `sh rebuild.sh python` 最新版本号(`3.8.0`)
+2. `sh rebuild.sh python 最新版本号(3.8.0)`
 
 ## 启动
 ```bash
